@@ -10,9 +10,10 @@
 <body>
 <h2>CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h2>
 <p>
+
     Celebram entre si a empresa <strong>M. DE JESUS DA CONCEICAO PINHEIRO LTDA</strong>
-    e o(a) Sr(a). <strong>{{ $pessoa->nome }}</strong>, CPF {{ $pessoa->cpf }},
-    residente em {{ $pessoa->endereco }}, {{ $pessoa->cidade }}/{{ $pessoa->uf }},
+    e o(a) Sr(a). <strong>{{ $person->nome }}</strong>, CPF {{ $person->cpf }},
+    residente em {{ $person->endereco }}, {{ $person->cidade }}/{{ $person->uf }},
     o presente contrato de assistência técnica.
 </p>
 
@@ -28,7 +29,7 @@
 <p style="margin-top: 50px;">Macapá, {{ now()->format('d/m/Y') }}</p>
 
 <p>_______________________________________<br>
-    {{ $pessoa->nome }} - CONTRATANTE
+    {{ $person->nome }} - CONTRATANTE
 </p>
 </body>
 </html>

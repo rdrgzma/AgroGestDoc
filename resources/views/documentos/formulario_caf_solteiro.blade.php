@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt_BR">
 <head>
     <meta charset="UTF-8">
     <style>
@@ -14,8 +14,10 @@
 <h2>Formulário de Solicitação de Cadastro Nacional da Agricultura Familiar — CAF</h2>
 <h3>Declarante</h3>
 
-<p><strong>Projeto de Assentamento:</strong> {{ $ufpa->assentamento }} &nbsp;&nbsp;
-    <strong>Município:</strong> {{ $ufpa->municipio }}</p>
+
+
+<p><strong>Projeto de Assentamento:</strong> {{ $ufpa->assentamento ?? '-' }} &nbsp;&nbsp;
+    <strong>Município:</strong> {{ $ufpa->municipio ?? '-'}}</p>
 
 <p><strong>Nome do Declarante:</strong> {{ $pessoa->nome }} &nbsp;&nbsp;
     <strong>CPF:</strong> {{ $pessoa->cpf }}</p>
@@ -31,8 +33,8 @@
     <tr>
         <td><strong>Tipo:</strong> Terra</td>
         <td><strong>Área:</strong> {{ $ufpa->area_total ?? '---' }} ha</td>
-        <td><strong>UF:</strong> {{ $ufpa->estado }}</td>
-        <td><strong>Município:</strong> {{ $ufpa->municipio }}</td>
+        <td><strong>UF:</strong> {{ $ufpa->estado ?? '-' }}</td>
+        <td><strong>Município:</strong> {{ $ufpa->municipio ?? '-' }}</td>
     </tr>
     <tr>
         <td><strong>Lâmina d’água:</strong> {{ $ufpa->lamina_agua ?? '-' }} ha</td>

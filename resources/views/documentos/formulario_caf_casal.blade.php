@@ -13,8 +13,9 @@
 
 <h2>Formulário de Solicitação de Cadastro Nacional da Agricultura Familiar — CAF</h2>
 <h3>Declarante e Cônjuge</h3>
+@dd($ufpa)
 
-<p><strong>Projeto de Assentamento:</strong> {{ $ufpa->assentamento }} &nbsp;&nbsp;
+<p><strong>Projeto de Assentamento:</strong> {{ $ufpa->assentamento??'' }} &nbsp;&nbsp;
     <strong>Município:</strong> {{ $ufpa->municipio }}</p>
 
 <p><strong>Nome do Declarante:</strong> {{ $pessoa->nome }} &nbsp;&nbsp;

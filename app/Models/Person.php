@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Person extends Model
 {
     use HasFactory;
+    protected $table = 'people';
     protected $fillable = [
         'nome', 'cpf', 'rg', 'data_nascimento', 'naturalidade', 'estado_civil',
         'nome_mae', 'email', 'telefone', 'endereco', 'bairro', 'cidade', 'uf', 'cep',

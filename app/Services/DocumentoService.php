@@ -3,10 +3,11 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Storage;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
+use Barryvdh\DomPDF\Facade\Pdf;
+use function Spatie\LaravelPdf\Support\pdf;
+
 
 class DocumentoService
 {
@@ -23,11 +24,19 @@ class DocumentoService
         $dompdf->render();
 
         $output = $dompdf->output();
+        dd($output);
         $path = "documentos/$nomeArquivo.pdf";
         Storage::put("public/$path", $output);
 
         return "storage/$path";
     }
+
+    public static function gerarPDFSpatie( string $view, $data, string $nomeArquivo)
+    {
+        pdf()->view('documentos.'.$view, compact('data'))
+        ->name($nomeArquivo)
+        ->download();
+           }
 
     public function gerarDOCX(string $view, array $data, string $nomeArquivo): string
     {

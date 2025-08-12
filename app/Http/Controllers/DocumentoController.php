@@ -4,65 +4,54 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Person;
+use App\Models\Ufpa;
 use App\Services\DocumentoService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DocumentoController extends Controller
 {
-    public function gerarContrato(Person $person, DocumentoService $documento)
+
+    public function gerarContrato(Person $person)
     {
-        $dados = ['pessoa' => $person];
-        $nomeArquivo = 'contrato_' . $person->id;
 
-        $caminhoPdf = $documento->gerarPDF('contrato', $dados, $nomeArquivo);
-        $caminhoDocx = $documento->gerarDOCX('contrato', $dados, $nomeArquivo);
+       // DocumentoService::gerarPDFSpatie('contrato', $person,$person-
+        $pdf = Pdf::loadView('documentos.contrato', compact('person'))->setPaper('a4');
+        return $pdf->download('contrato_'.$person->nome.'.pdf');
 
-        return response()->json([
-            'pdf' => asset($caminhoPdf),
-            'docx' => asset($caminhoDocx),
-        ]);
     }
 
-    public function gerarDeclaracaoPosse(Person $person, DocumentoService $documento)
+    public function gerarDeclaracaoPosse(Person $person)
     {
         $renda = [
             'propria' => 18000.00,
             'externa' => 5648.00,
         ];
 
-        $dados = ['pessoa' => $person, 'renda' => $renda];
-        $arquivo = 'declaracao_posse_' . $person->id;
+        $pessoa = $person;
 
-        $pdf = $documento->gerarPDF('declaracao_posse_renda', $dados, $arquivo);
-        $docx = $documento->gerarDOCX('declaracao_posse_renda', $dados, $arquivo);
+        $arquivo = 'declaracao_posse_' . $person->nome;
 
-        return response()->json([
-            'pdf' => asset($pdf),
-            'docx' => asset($docx),
-        ]);
+        $pdf = Pdf::loadView('documentos.declaracao_posse_renda', compact(['pessoa','renda']))->setPaper('a4');
+        return $pdf->download($arquivo.'.pdf');
+
     }
 
-    public function gerarCAF(Person $pessoa, Ufpa $ufpa, DocumentoService $doc)
+    public function gerarCAF(Person $person)
     {
         $renda = [
             'propria' => 31200.00,
             'externa' => 0.00,
             'beneficios' => 9000.00,
         ];
-
-        $conjuge = $pessoa->conjuge; // Supondo que você relacione isso no model
-
+        $person = $person::with('ufpas')->first();
+        $pessoa = $person;
+        $ufpa = $person->ufpas()->first();
+        $conjuge = $person->conjuge; // Supondo que você relacione isso no model
         $view = $conjuge ? 'formulario_caf_casal' : 'formulario_caf_solteiro';
-        $dados = compact('pessoa', 'ufpa', 'renda', 'conjuge');
+        $nome = 'formulario_caf_' . $pessoa->nome;
+        $pdf = Pdf::loadView('documentos.'.$view, compact(['pessoa','ufpa','renda','conjuge']))->setPaper('a4');
+        return $pdf->download($nome.'.pdf');
 
-        $nome = 'formulario_caf_' . $pessoa->id;
-
-        $pdf = $doc->gerarPDF($view, $dados, $nome);
-        $docx = $doc->gerarDOCX($view, $dados, $nome);
-
-        return response()->json([
-            'pdf' => asset($pdf),
-            'docx' => asset($docx),
-        ]);
     }
 
 
