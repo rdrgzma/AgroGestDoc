@@ -53,6 +53,9 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->navigationGroups([
+                'Cadastros'
+            ])
             ->authMiddleware([
                 Authenticate::class,
             ]);

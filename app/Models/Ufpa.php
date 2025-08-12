@@ -1,27 +1,38 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Ufpa extends Model
 {
     protected $fillable = [
-        'person_id', 'assentamento', 'municipio', 'estado',
-        'latitude', 'longitude', 'area_total', 'created_by', 'updated_by'
+        'person_id',
+        'nome_propriedade',
+        'area_total',
+        'localizacao',
+        'matricula',
+        'nirf',
+        'ccir',
+        'car',
+        'tipo_posse',
+        'created_by',
     ];
 
-    public function person(): BelongsTo {
-        return $this->belongsTo(Person::class);
+    public function pessoa()
+    {
+        return $this->belongsTo(Person::class, 'person_id');
     }
 
-    public function producoes(): HasMany {
+    public function criador()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function producoes()
+    {
         return $this->hasMany(Producao::class);
     }
-
-    public function familiares(): HasMany {
-        return $this->hasMany(Familiar::class);
-    }
 }
+
 
