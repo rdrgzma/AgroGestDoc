@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('person_id')->constrained()->cascadeOnDelete();
-            $table->enum('tipo', ['pagar', 'receber']);
-            $table->string('descricao');
+            $table->foreignId('cliente_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->enum('tipo', ['pagar', 'receber'])->default('pagar');
+            $table->string('descricao')->nullable();
             $table->decimal('valor', 10, 2);
             $table->date('vencimento');
             $table->enum('status', ['pendente', 'pago', 'atrasado'])->default('pendente');

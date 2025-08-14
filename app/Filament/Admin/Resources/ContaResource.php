@@ -25,25 +25,29 @@ class ContaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('person_id')
-                    ->relationship('person', 'id')
-                    ->required(),
-                Forms\Components\TextInput::make('tipo')
+                Forms\Components\Select::make('cliente_id')
+                    ->label('Cliente')
+                    ->searchable()
+                    ->relationship('cliente', 'nome_completo'),
+                Forms\Components\Select::make('tipo')
+                    ->label('Tipo')
+                    ->options(['pagar', 'receber'])
+                    ->default('pagar')
                     ->required(),
                 Forms\Components\TextInput::make('descricao')
-                    ->required(),
+                   ,
                 Forms\Components\TextInput::make('valor')
                     ->required()
                     ->numeric(),
                 Forms\Components\DatePicker::make('vencimento')
                     ->required(),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
+                    ->label('Status')
+                    ->options(['pendente', 'pago', 'atrasado'])
                     ->required(),
-                Forms\Components\TextInput::make('forma_pagamento'),
-                Forms\Components\TextInput::make('created_by')
-                    ->numeric(),
-                Forms\Components\TextInput::make('updated_by')
-                    ->numeric(),
+                Forms\Components\Select::make('forma_pagamento')
+                    ->label('Forma de Pagamento')
+                    ->options(['PIX','Crédito','Débito','Boleto Bancário','Outros']),
             ]);
     }
 
@@ -51,8 +55,9 @@ class ContaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('person.id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('cliente.nome_completo')
+                    ->label('Cliente')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('tipo')
                     ->searchable(),
@@ -64,9 +69,10 @@ class ContaResource extends Resource
                 Tables\Columns\TextColumn::make('vencimento')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status')
+                Tables\Columns\ToggleColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('forma_pagamento')
+                    ->label('Forma de Pagamento')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_by')
                     ->numeric()
@@ -74,14 +80,6 @@ class ContaResource extends Resource
                 Tables\Columns\TextColumn::make('updated_by')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

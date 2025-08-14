@@ -150,15 +150,15 @@ class DocumentGeneratePage extends Page implements HasForms, HasTable
                     ->modalDescription('Deseja gerar todos os documentos disponíveis para este cliente?')
                     ->action(fn (Cliente $record) => $this->generateAllDocuments($record)),
 
-                Tables\Actions\Action::make('viewClient')
-                    ->label('Ver Detalhes')
-                    ->icon('heroicon-o-eye')
-                    ->color('gray')
-                    ->modalContent(fn (Cliente $record): View => view(
-                        'filament.modals.client-details',
-                        ['client' => $record]
-                    ))
-                    ->modalWidth(MaxWidth::Large),
+//                Tables\Actions\Action::make('viewClient')
+//                    ->label('Ver Detalhes')
+//                    ->icon('heroicon-o-eye')
+//                    ->color('gray')
+//                    ->modalContent(fn (Cliente $record): View => view(
+//                        'filament.modals.client-details',
+//                        ['client' => $record]
+//                    ))
+//                    ->modalWidth(MaxWidth::Large),
             ])
             ->bulkActions([
                 Tables\Actions\BulkAction::make('generateAllForSelected')
