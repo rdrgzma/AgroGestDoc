@@ -19,6 +19,11 @@ class PersonResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
   // protected static ?string $navigationGroup = 'Cadastros';
     protected static ?string $navigationLabel = 'Pessoas';
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Forms\Form
     {
         return $form->schema([

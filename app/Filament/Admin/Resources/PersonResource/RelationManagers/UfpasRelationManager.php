@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Resources\PersonResource\RelationManagers;
 
 use App\Models\Ufpa;
-use App\Services\DocumentGeneratorService;
+use App\Services\DocumentGeneratorServiceAi;
 use Filament\Forms;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -46,7 +46,7 @@ class UfpasRelationManager extends RelationManager
                     ->label('Gerar DOCX')
                     ->icon('heroicon-o-document-text')
                     ->action(function ($record) {
-                        $filePath = DocumentGeneratorService::generateDocx(
+                        $filePath = DocumentGeneratorServiceAi::generateDocx(
                             storage_path('app/templates/contrato.docx'),
                             [
                                 'nome' => $record->pessoa->nome,
@@ -62,7 +62,7 @@ class UfpasRelationManager extends RelationManager
                     ->label('Gerar PDF')
                     ->icon('heroicon-o-document')
                     ->action(function ($record) {
-                        $docxPath = DocumentGeneratorService::generateDocx(
+                        $docxPath = DocumentGeneratorServiceAi::generateDocx(
                             storage_path('app/templates/contrato.docx'),
                             [
                                 'nome' => $record->pessoa->nome,
@@ -72,7 +72,7 @@ class UfpasRelationManager extends RelationManager
                             'contrato_' . $record->id
                         );
 
-                        $pdfPath = DocumentGeneratorService::generatePdfFromDocx($docxPath, 'contrato_' . $record->id);
+                        $pdfPath = DocumentGeneratorServiceAi::generatePdfFromDocx($docxPath, 'contrato_' . $record->id);
                         return Response::download($pdfPath);
                     }),
             ]);

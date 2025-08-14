@@ -25,6 +25,11 @@ class DocumentoGeradoResource extends Resource
     protected static ?string $model = DocumentoGerado::class;
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Documentos Gerados';
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
